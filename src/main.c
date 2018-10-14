@@ -1,12 +1,10 @@
 #include <ncurses.h>
 
-struct points {
+typedef struct points {
   int x;
   int y;
   struct points *next;
-};
-
-typedef struct points Points;
+} Points;
 
 typedef struct {
   Points *snake;
