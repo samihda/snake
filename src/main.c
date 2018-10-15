@@ -91,9 +91,15 @@ Board *createBoard(Points *snake, Points *foods, int row, int col)
 
 Points *moveSnake(Points *snake)
 {
-  Points *p = createPoints(snake->x, snake->y + 1); // go downwards
-  p->next = snake;
-  snake = p;
+  Points *head;
+
+  free(snake->next);
+  snake->next = NULL;
+
+  head = createPoints(snake->x, snake->y + 1); // go downwards
+  head->next = snake;
+
+  snake = head;
 
   return snake;
 }
