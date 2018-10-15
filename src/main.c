@@ -39,7 +39,7 @@ int main()
 
   int row;
   int col;
-  int ch;
+  char ch;
   Board *board;
 
   getmaxyx(stdscr, row, col);
