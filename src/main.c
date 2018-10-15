@@ -17,6 +17,7 @@ typedef struct {
 Points *createPoints(int x, int y);
 Points *createSnake(Points *head, Points *tail);
 Board *createBoard(Points *snake, Points *foods, int row, int col);
+Points *moveSnake(Points *snake);
 
 void renderSnake(Points *snake);
 
@@ -52,6 +53,8 @@ int main()
     renderSnake(board->snake);
 
     refresh();
+
+    board->snake = moveSnake(board->snake);
   }
 
   endwin();
@@ -84,6 +87,15 @@ Board *createBoard(Points *snake, Points *foods, int row, int col)
   board->ymax = col;
 
   return board;
+}
+
+Points *moveSnake(Points *snake)
+{
+  Points *p = createPoints(snake->x, snake->y + 1); // go downwards
+  p->next = snake;
+  snake = p;
+
+  return snake;
 }
 
 void renderSnake(Points *snake)
