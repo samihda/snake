@@ -77,7 +77,7 @@ Points *createSnake(Points *head, Points *tail)
 
 Board *createBoard(Points *snake, Points *foods, int row, int col)
 {
-  Board* board = malloc(sizeof(*board));
+  Board *board = malloc(sizeof(*board));
   board->foods = foods;
   board->snake = snake;
   board->xmax = row;
