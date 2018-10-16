@@ -1,5 +1,6 @@
 #include <ncurses.h>
 #include <stdlib.h>
+#include <stdbool.h>
 
 typedef struct points {
   int x;
@@ -18,6 +19,7 @@ Points *createPoints(int x, int y);
 Points *createSnake(Points *head, Points *tail);
 Board *createBoard(Points *snake, Points *foods, int row, int col);
 Points *moveSnake(Points *snake);
+bool collided(Board *board);
 
 void renderSnake(Points *snake);
 
@@ -47,7 +49,7 @@ int main()
 
   board = createBoard(createSnake(createPoints(2, 3), createPoints(2, 2)), NULL, row, col);
 
-  while ((ch = getch()) != 'q') {
+  while (!collided(board) && (ch = getch()) != 'q') {
     clear();
 
     renderSnake(board->snake);
@@ -102,6 +104,17 @@ Points *moveSnake(Points *snake)
   snake = head;
 
   return snake;
+}
+
+bool collided(Board *board)
+{
+  if (board->snake->x == 0 || board->snake->y == 0) {
+    return true;
+  } else if (board->snake->x == board->xmax || board->snake->y == board->ymax) {
+    return true;
+  } else {
+    return false;
+  }
 }
 
 void renderSnake(Points *snake)
