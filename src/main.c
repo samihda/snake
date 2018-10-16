@@ -83,8 +83,8 @@ Board *createBoard(Points *snake, Points *foods, int row, int col)
   Board *board = malloc(sizeof(*board));
   board->foods = foods;
   board->snake = snake;
-  board->xmax = row;
-  board->ymax = col;
+  board->xmax = col;
+  board->ymax = row;
 
   return board;
 }
