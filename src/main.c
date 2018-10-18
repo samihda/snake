@@ -15,10 +15,13 @@ typedef struct {
   int ymax;
 } Board;
 
+enum direction { UP, DOWN, LEFT, RIGHT };
+
 Points *createPoints(int x, int y);
 Points *createSnake(Points *head, Points *tail);
 Board *createBoard(Points *snake, Points *foods, int row, int col);
 Points *moveSnake(Points *snake);
+enum direction getDirection(enum direction dir, int c);
 bool collided(Board *board);
 
 void renderSnake(Points *snake);
@@ -114,6 +117,26 @@ bool collided(Board *board)
     return true;
   } else {
     return false;
+  }
+}
+
+enum direction getDirection(enum direction dir, int c)
+{
+  switch (c) {
+  case KEY_UP:
+    if (dir != DOWN) return UP;
+
+  case KEY_DOWN:
+    if (dir != UP) return DOWN;
+
+  case KEY_LEFT:
+    if (dir != RIGHT) return LEFT;
+
+  case KEY_RIGHT:
+    if (dir != LEFT) return RIGHT;
+
+  default:
+    return dir;
   }
 }
 
