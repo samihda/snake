@@ -46,14 +46,13 @@ int main()
 
   int row;
   int col;
-  char ch;
   Board *board;
 
   getmaxyx(stdscr, row, col);
 
   board = createBoard(createSnake(createPoints(2, 3), createPoints(2, 2)), NULL, row, col);
 
-  while (!collided(board) && (ch = getch()) != 'q') {
+  while (!collided(board)) {
     clear();
 
     renderSnake(board->snake);
