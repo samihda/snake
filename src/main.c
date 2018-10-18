@@ -22,6 +22,7 @@ Points *createSnake(Points *head, Points *tail);
 Board *createBoard(Points *snake, Points *foods, int row, int col);
 Points *moveSnake(Points *snake);
 enum direction getDirection(enum direction dir, int c);
+enum direction getDirection(enum direction dir);
 bool collided(Board *board);
 
 void renderSnake(Points *snake);
@@ -120,8 +121,10 @@ bool collided(Board *board)
   }
 }
 
-enum direction getDirection(enum direction dir, int c)
+enum direction getDirection(enum direction dir)
 {
+  int c = getch();
+
   switch (c) {
   case KEY_UP:
     if (dir != DOWN) return UP;
