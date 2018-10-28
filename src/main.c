@@ -20,7 +20,7 @@ enum direction { UP, DOWN, LEFT, RIGHT };
 Points *createPoints(int x, int y);
 Points *createSnake(Points *head, Points *tail);
 Board *createBoard(Points *snake, Points *foods, int row, int col);
-Points *moveSnake(Points *snake);
+Points *moveSnake(enum direction dir, Points *snake);
 enum direction getDirection(enum direction dir);
 bool collided(Board *board);
 
@@ -46,10 +46,12 @@ int main()
   int row;
   int col;
   Board *board;
+  enum direction dir;
 
   getmaxyx(stdscr, row, col);
 
-  board = createBoard(createSnake(createPoints(2, 3), createPoints(2, 2)), NULL, row, col);
+  dir = RIGHT;
+  board = createBoard(createSnake(createPoints(3, 2), createPoints(2, 2)), NULL, row, col);
 
   while (!collided(board)) {
     clear();
@@ -58,7 +60,8 @@ int main()
 
     refresh();
 
-    board->snake = moveSnake(board->snake);
+    dir = getDirection(dir);
+    board->snake = moveSnake(dir, board->snake);
   }
 
   endwin();
@@ -93,14 +96,32 @@ Board *createBoard(Points *snake, Points *foods, int row, int col)
   return board;
 }
 
-Points *moveSnake(Points *snake)
+Points *moveSnake(enum direction dir, Points *snake)
 {
   Points *head;
+
+  int offsetx = 0;
+  int offsety = 0;
 
   free(snake->next);
   snake->next = NULL;
 
-  head = createPoints(snake->x, snake->y + 1); // go downwards
+  switch (dir) {
+  case UP:
+    offsety = -1;
+    break;
+  case DOWN:
+    offsety = 1;
+    break;
+  case LEFT:
+    offsetx = -1;
+    break;
+  case RIGHT:
+    offsetx = 1;
+    break;
+  }
+
+  head = createPoints(snake->x + offsetx, snake->y + offsety);
   head->next = snake;
 
   snake = head;
