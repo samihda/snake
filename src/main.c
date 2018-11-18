@@ -23,6 +23,7 @@ Board *createBoard(Points *snake, Points *foods, int row, int col);
 Points *moveSnake(enum direction dir, Points *snake);
 enum direction getDirection(enum direction dir);
 bool collided(Board *board);
+bool suicide(Points *snake);
 
 void renderSnake(Points *snake);
 
@@ -53,7 +54,7 @@ int main()
   dir = RIGHT;
   board = createBoard(createSnake(createPoints(3, 2), createPoints(2, 2)), NULL, row, col);
 
-  while (!collided(board)) {
+  while (!collided(board) && !suicide(board->snake)) {
     clear();
 
     renderSnake(board->snake);
@@ -138,6 +139,21 @@ bool collided(Board *board)
   } else {
     return false;
   }
+}
+
+bool suicide(Points *snake)
+{
+  Points *tail = snake->next;
+
+  while (tail) {
+    if (tail->x == snake->x && tail->y == snake->y) {
+      return true;
+    }
+
+    tail = tail->next;
+  }
+
+  return false;
 }
 
 enum direction getDirection(enum direction dir)
