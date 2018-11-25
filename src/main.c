@@ -28,7 +28,7 @@ bool collided(Board *board);
 bool suicide(Points *snake);
 
 void dropOne(Points *snake);
-void renderSnake(Points *snake);
+void render(Board *board);
 
 int main()
 {
@@ -60,7 +60,7 @@ int main()
   while (!collided(board) && !suicide(board->snake)) {
     clear();
 
-    renderSnake(board->snake);
+    render(board);
 
     refresh();
 
@@ -194,10 +194,18 @@ enum direction getDirection(enum direction dir)
   }
 }
 
-void renderSnake(Points *snake)
+void render(Board *board)
 {
+  Points *snake = board->snake;
+  Points *foods = board->foods;
+
   while (snake) {
     mvaddch(snake->y, snake->x, ACS_BLOCK);
     snake = snake->next;
+  }
+
+  while (foods) {
+    mvaddch(foods->y, foods->x, ACS_DIAMOND);
+    foods = foods->next;
   }
 }
