@@ -27,7 +27,7 @@ enum direction getDirection(enum direction dir);
 bool collided(Board *board);
 bool suicide(Points *snake);
 
-void dropOne(Points *snake);
+void dropLast(Points *list);
 void render(Board *board);
 
 int main()
@@ -123,8 +123,8 @@ Points *moveSnake(enum direction dir, Points *snake)
   }
 
   head = createPoints(snake->x + offsetx, snake->y + offsety);
+  dropLast(snake);
 
-  dropOne(snake);
   head->next = snake;
 
   snake = head;
@@ -132,18 +132,18 @@ Points *moveSnake(enum direction dir, Points *snake)
   return snake;
 }
 
-void dropOne(Points *snake)
+void dropLast(Points *list)
 {
-  while (snake->next) {
-    if (snake->next->next) {
-      snake = snake->next;
+  while (list->next) {
+    if (list->next->next) {
+      list = list->next;
     } else {
       break;
     }
   }
 
-  free(snake->next);
-  snake->next = NULL;
+  free(list->next);
+  list->next = NULL;
 }
 
 bool collided(Board *board)
