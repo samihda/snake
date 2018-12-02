@@ -30,6 +30,8 @@ int main()
 
   getmaxyx(stdscr, row, col);
 
+  seedRandomGen();
+
   dir = RIGHT;
   board = createBoard(createSnake(createPoints(3, 2),
                                   createPoints(2, 2)),

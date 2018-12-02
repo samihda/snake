@@ -1,6 +1,17 @@
 #include "snake.h"
 #include <stdlib.h>
 #include <stdbool.h>
+#include <time.h>
+
+void seedRandomGen()
+{
+  srand(time(0));
+}
+
+int createRandomInt(int max)
+{
+  return rand() % max;
+}
 
 Points *createPoints(int x, int y)
 {
