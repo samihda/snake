@@ -10,7 +10,7 @@ void seedRandomGen()
 
 int createRandomInt(int max)
 {
-  return rand() % max;
+  return rand() % (max - 1) + 1;
 }
 
 Points *createPoints(int x, int y)
