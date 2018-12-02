@@ -130,7 +130,6 @@ void moveSnake(enum direction dir, Board *board)
   }
 
   head = createPoints(board->snake->x + offsetx, board->snake->y + offsety);
-  dropLast(snake);
 
   if (head->x == board->foodX && head->y == board->foodY) {
     board->foodX = 0;
