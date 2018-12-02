@@ -10,7 +10,8 @@ typedef struct points {
 
 typedef struct {
   Points *snake;
-  Points *foods;
+  int foodX;
+  int foodY;
   int xmax;
   int ymax;
 } Board;
@@ -19,7 +20,7 @@ enum direction { UP, DOWN, LEFT, RIGHT };
 
 Points *createPoints(int x, int y);
 Points *createSnake(Points *head, Points *tail);
-Board *createBoard(Points *snake, Points *foods, int row, int col);
+Board *createBoard(Points *snake, int foodX, int foodY, int row, int col);
 
 Points *moveSnake(enum direction dir, Points *snake);
 enum direction getDirection(enum direction dir);
@@ -55,7 +56,12 @@ int main()
   getmaxyx(stdscr, row, col);
 
   dir = RIGHT;
-  board = createBoard(createSnake(createPoints(3, 2), createPoints(2, 2)), NULL, row, col);
+  board = createBoard(createSnake(createPoints(3, 2),
+                                  createPoints(2, 2)),
+                      0,
+                      0,
+                      row,
+                      col);
 
   while (!collided(board) && !suicide(board->snake)) {
     clear();
@@ -89,11 +95,12 @@ Points *createSnake(Points *head, Points *tail)
   return head;
 }
 
-Board *createBoard(Points *snake, Points *foods, int row, int col)
+Board *createBoard(Points *snake, int foodX, int foodY, int row, int col)
 {
   Board *board = malloc(sizeof(*board));
-  board->foods = foods;
   board->snake = snake;
+  board->foodX = foodX;
+  board->foodY = foodY;
   board->xmax = col;
   board->ymax = row;
 
@@ -197,15 +204,13 @@ enum direction getDirection(enum direction dir)
 void render(Board *board)
 {
   Points *snake = board->snake;
-  Points *foods = board->foods;
 
   while (snake) {
     mvaddch(snake->y, snake->x, ACS_BLOCK);
     snake = snake->next;
   }
 
-  while (foods) {
-    mvaddch(foods->y, foods->x, ACS_DIAMOND);
-    foods = foods->next;
+  if (board->foodX > 0 && board->foodY > 0) {
+    mvaddch(board->foodY, board->foodX, ACS_DIAMOND);
   }
 }
