@@ -33,8 +33,8 @@ int main()
   dir = RIGHT;
   board = createBoard(createSnake(createPoints(3, 2),
                                   createPoints(2, 2)),
-                      0,
-                      0,
+                      createRandomInt(col),
+                      createRandomInt(row),
                       row,
                       col);
 

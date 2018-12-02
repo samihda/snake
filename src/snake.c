@@ -66,8 +66,8 @@ void moveSnake(enum direction dir, Board *board)
   head = createPoints(board->snake->x + offsetx, board->snake->y + offsety);
 
   if (head->x == board->foodX && head->y == board->foodY) {
-    board->foodX = 0;
-    board->foodY = 0;
+    board->foodX = createRandomInt(board->xmax);
+    board->foodY = createRandomInt(board->ymax);
   } else {
     dropLast(board->snake);
   }
