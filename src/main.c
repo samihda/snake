@@ -1,7 +1,5 @@
 #include "snake.h"
 #include <ncurses.h>
-#include <stdlib.h>
-#include <stdbool.h>
 
 enum direction getDirection(enum direction dir);
 void render(Board *board);
