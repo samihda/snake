@@ -22,7 +22,7 @@ Points *createPoints(int x, int y);
 Points *createSnake(Points *head, Points *tail);
 Board *createBoard(Points *snake, int foodX, int foodY, int row, int col);
 
-Points *moveSnake(enum direction dir, Points *snake);
+void moveSnake(enum direction dir, Board *board);
 enum direction getDirection(enum direction dir);
 
 bool collided(Board *board);
@@ -71,7 +71,7 @@ int main()
     refresh();
 
     dir = getDirection(dir);
-    board->snake = moveSnake(dir, board->snake);
+    moveSnake(dir, board);
   }
 
   endwin();
@@ -107,7 +107,7 @@ Board *createBoard(Points *snake, int foodX, int foodY, int row, int col)
   return board;
 }
 
-Points *moveSnake(enum direction dir, Points *snake)
+void moveSnake(enum direction dir, Board *board)
 {
   Points *head;
 
@@ -129,14 +129,18 @@ Points *moveSnake(enum direction dir, Points *snake)
     break;
   }
 
-  head = createPoints(snake->x + offsetx, snake->y + offsety);
+  head = createPoints(board->snake->x + offsetx, board->snake->y + offsety);
   dropLast(snake);
 
-  head->next = snake;
+  if (head->x == board->foodX && head->y == board->foodY) {
+    board->foodX = 0;
+    board->foodY = 0;
+  } else {
+    dropLast(board->snake);
+  }
 
-  snake = head;
-
-  return snake;
+  head->next = board->snake;
+  board->snake = head;
 }
 
 void dropLast(Points *list)
