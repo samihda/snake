@@ -76,14 +76,8 @@ void moveSnake(enum direction dir, Board *board)
   board->snake = head;
 }
 
-void dropLast(Points *list) // for length > 1
+void dropLast(Points *list)
 {
-  /* if (list->next == NULL) { */
-  /*   free(list); */
-  /*   list = NULL; */
-  /*   return; */
-  /* } */
-
   while (list->next) {
     if (list->next->next) {
       list = list->next;
