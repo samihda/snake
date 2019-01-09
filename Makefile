@@ -5,3 +5,6 @@ build:
 
 run: build
 	./snake
+
+clean:
+	rm snake
